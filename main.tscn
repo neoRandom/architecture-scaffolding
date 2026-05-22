@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://c3hqfyupisitr"]
+
+[ext_resource type="PackedScene" uid="uid://d0nien4s7hipy" path="res://scaffold.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cxwfm4pfap2uf" path="res://components/title_subtitle_list_add.tscn" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://bb0biyvrql1n2" path="res://resources/title_subtitle_resource.gd" id="4_1bvp3"]
+
+[sub_resource type="Resource" id="Resource_lquwl"]
+script = ExtResource("4_1bvp3")
+title = "Use Cases"
+subtitle = "What and how it should do"
+metadata/_custom_type_script = "uid://bb0biyvrql1n2"
+
+[sub_resource type="Resource" id="Resource_1bvp3"]
+script = ExtResource("4_1bvp3")
+title = "Models"
+subtitle = "What are the rules and the objects/entities"
+metadata/_custom_type_script = "uid://bb0biyvrql1n2"
+
+[sub_resource type="Resource" id="Resource_7mycd"]
+script = ExtResource("4_1bvp3")
+title = "Services"
+subtitle = "What are, if any, the encapsulated single-responsibility business logic"
+metadata/_custom_type_script = "uid://bb0biyvrql1n2"
+
+[sub_resource type="Resource" id="Resource_272bh"]
+script = ExtResource("4_1bvp3")
+title = "Driver Adapters"
+subtitle = "With what the user will interact with"
+metadata/_custom_type_script = "uid://bb0biyvrql1n2"
+
+[sub_resource type="Resource" id="Resource_5vw27"]
+script = ExtResource("4_1bvp3")
+title = "Driven Adapters"
+subtitle = "How the service will use external services"
+metadata/_custom_type_script = "uid://bb0biyvrql1n2"
+
+[node name="Main" type="Control" unique_id=1351861954]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scaffold" parent="." unique_id=949884121 instance=ExtResource("2_0xm2m")]
+layout_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer" parent_id_path=PackedInt32Array(949884121, 487964463) index="0" unique_id=1099507515]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer" unique_id=2132676194]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="TitleSubtitleListAdd" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1392042095 instance=ExtResource("2_1bvp3")]
+layout_mode = 2
+size_flags_horizontal = 3
+resource = SubResource("Resource_lquwl")
+
+[node name="TitleSubtitleListAdd2" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1023047887 instance=ExtResource("2_1bvp3")]
+layout_mode = 2
+size_flags_horizontal = 3
+resource = SubResource("Resource_1bvp3")
+
+[node name="TitleSubtitleListAdd3" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=890356606 instance=ExtResource("2_1bvp3")]
+layout_mode = 2
+size_flags_horizontal = 3
+resource = SubResource("Resource_7mycd")
+
+[node name="TitleSubtitleListAdd4" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1330537633 instance=ExtResource("2_1bvp3")]
+layout_mode = 2
+size_flags_horizontal = 3
+resource = SubResource("Resource_272bh")
+
+[node name="TitleSubtitleListAdd5" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer/ScrollContainer/HBoxContainer" unique_id=1204870403 instance=ExtResource("2_1bvp3")]
+layout_mode = 2
+size_flags_horizontal = 3
+resource = SubResource("Resource_5vw27")
+
+[editable path="Scaffold"]

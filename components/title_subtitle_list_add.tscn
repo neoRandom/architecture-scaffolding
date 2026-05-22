@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cxwfm4pfap2uf"]
+
+[ext_resource type="Script" uid="uid://clxgym6bo57dx" path="res://components/title_subtitle_list_add.gd" id="1_15yvs"]
+[ext_resource type="PackedScene" uid="uid://bmmobuhjonkj2" path="res://components/list_add.tscn" id="1_m2fxb"]
+
+[node name="TitleSubtitleListAdd" type="Control" unique_id=1392042095]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_15yvs")
+
+[node name="UseCases" type="VBoxContainer" parent="." unique_id=2009420247]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="UseCases" unique_id=1971107224]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Subtitle" type="Label" parent="UseCases" unique_id=974360688]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UseCases" unique_id=875991567]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ListAdd" parent="UseCases/MarginContainer" unique_id=1215188655 instance=ExtResource("1_m2fxb")]
+layout_mode = 2

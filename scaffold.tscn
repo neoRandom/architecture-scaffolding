@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://d0nien4s7hipy"]
+
+[ext_resource type="Script" uid="uid://yp0ary4b688q" path="res://scaffold.gd" id="1_8b3dw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8b3dw"]
+bg_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
+
+[node name="Scaffold" type="PanelContainer" unique_id=949884121]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8b3dw")
+script = ExtResource("1_8b3dw")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1890052159]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1247953347]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=487964463]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
