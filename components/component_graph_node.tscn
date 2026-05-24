@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://brim8mxtpg62j"]
+
+[ext_resource type="Script" uid="uid://co2mcq7rh81k6" path="res://components/component_graph_node.gd" id="1_wunoc"]
+[ext_resource type="PackedScene" uid="uid://bmmobuhjonkj2" path="res://components/list_add.tscn" id="2_sudyv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw2my"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.21176471, 0.21176471, 0.21176471, 0.78431374)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqxeb"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.24705882, 0.24705882, 0.24705882, 0.78431374)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8sptv"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.25882354, 0.25882354, 0.25882354, 0.78431374)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m25v1"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0.4465834, 0.8754928, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o8244"]
+content_margin_left = 16.0
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(2.8878452e-07, 0.5181507, 0.83483964, 1)
+border_color = Color(0.325, 0.325, 0.325, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="ComponentGraphNode" type="GraphNode" unique_id=804450822]
+offset_right = 224.0
+offset_bottom = 152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pw2my")
+theme_override_styles/panel_selected = SubResource("StyleBoxFlat_dqxeb")
+theme_override_styles/panel_focus = SubResource("StyleBoxFlat_8sptv")
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_m25v1")
+theme_override_styles/titlebar_selected = SubResource("StyleBoxFlat_o8244")
+resizable = true
+title = "System Component"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_wunoc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=426595962]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ComponentName" type="LineEdit" parent="VBoxContainer" unique_id=1191858000]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=211481214]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ListAdd" parent="VBoxContainer" unique_id=1215188655 instance=ExtResource("2_sudyv")]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
