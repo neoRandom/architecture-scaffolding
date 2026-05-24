@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://t5jv6ai08vdt"]
+
+[ext_resource type="Script" uid="uid://dopwvurg4h8lo" path="res://managers/window_mode_manager.gd" id="1_18v1a"]
+
+[node name="WindowModeManager" type="Node" unique_id=1112082384]
+script = ExtResource("1_18v1a")

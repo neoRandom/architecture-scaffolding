@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://3tkhvpg6t7ok"]
+
+[ext_resource type="Script" uid="uid://byvt40og6td3h" path="res://managers/global_input_manager.gd" id="1_m4rtd"]
+
+[node name="GlobalInputManager" type="Node" unique_id=947945349]
+script = ExtResource("1_m4rtd")
