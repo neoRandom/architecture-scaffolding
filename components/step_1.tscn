@@ -6,31 +6,31 @@
 [sub_resource type="Resource" id="Resource_yeft1"]
 script = ExtResource("2_nphiv")
 title = "Use Cases"
-subtitle = "What and how it should do"
+subtitle = "What and how the software should do. (e.g.: CreateUser)"
 metadata/_custom_type_script = "uid://bb0biyvrql1n2"
 
 [sub_resource type="Resource" id="Resource_pyott"]
 script = ExtResource("2_nphiv")
 title = "Models"
-subtitle = "What are the rules and the objects/entities"
+subtitle = "Rules and the business objects/entities (e.g.: User)"
 metadata/_custom_type_script = "uid://bb0biyvrql1n2"
 
 [sub_resource type="Resource" id="Resource_jvy4d"]
 script = ExtResource("2_nphiv")
 title = "Services"
-subtitle = "What are, if any, the encapsulated single-responsibility business logic"
+subtitle = "Niche isolated business logic (e.g.: JwtGenerator; may be none)"
 metadata/_custom_type_script = "uid://bb0biyvrql1n2"
 
 [sub_resource type="Resource" id="Resource_e3mf1"]
 script = ExtResource("2_nphiv")
 title = "Driver Adapters"
-subtitle = "With what the user will interact with"
+subtitle = "With what the user will interact with (e.g.: HttpApi)"
 metadata/_custom_type_script = "uid://bb0biyvrql1n2"
 
 [sub_resource type="Resource" id="Resource_ynkhd"]
 script = ExtResource("2_nphiv")
 title = "Driven Adapters"
-subtitle = "How the service will use external services"
+subtitle = "How the service will use external services (e.g.: PostgresUserRepository)"
 metadata/_custom_type_script = "uid://bb0biyvrql1n2"
 
 [node name="Step1" type="Control" unique_id=1606613665]
