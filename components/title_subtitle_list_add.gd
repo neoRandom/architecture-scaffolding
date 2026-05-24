@@ -8,6 +8,8 @@ extends Control
 		if resource != null and not resource.changed.is_connected(update):
 			resource.changed.connect(update)
 
+@onready var items: ListAdd = %ListAdd
+
 func _ready() -> void:
 	update()
 

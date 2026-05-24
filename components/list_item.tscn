@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dby4oqte32byo"]
+
+[ext_resource type="Script" uid="uid://dsnu7rbdevsxd" path="res://components/list_item.gd" id="1_xre74"]
+
+[node name="ListItem" type="Control" unique_id=464864583]
+custom_minimum_size = Vector2(72, 32)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_xre74")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=760463065]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1331626716]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="MarginContainer/HBoxContainer" unique_id=1193692175]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1982939369]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "R"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
