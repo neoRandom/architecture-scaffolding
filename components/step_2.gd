@@ -1,3 +1,4 @@
+class_name Step2
 extends Control
 
 @onready var graph_edit: GraphEdit = %GraphEdit

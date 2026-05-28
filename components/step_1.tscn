@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7ppg8f7wbpd"]
 
 [ext_resource type="PackedScene" uid="uid://cxwfm4pfap2uf" path="res://components/title_subtitle_list_add.tscn" id="1_31jbx"]
+[ext_resource type="Script" uid="uid://dg82o5gdmn2v3" path="res://components/step_1.gd" id="1_nphiv"]
 [ext_resource type="Script" uid="uid://bb0biyvrql1n2" path="res://resources/title_subtitle_resource.gd" id="2_nphiv"]
 
 [sub_resource type="Resource" id="Resource_yeft1"]
@@ -42,6 +43,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_nphiv")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1055445014]
 layout_mode = 1
@@ -78,26 +80,31 @@ size_flags_vertical = 3
 theme_override_constants/separation = 16
 
 [node name="UseCases" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1392042095 instance=ExtResource("1_31jbx")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_yeft1")
 
 [node name="Models" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1348963724 instance=ExtResource("1_31jbx")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_pyott")
 
 [node name="Services" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1163289455 instance=ExtResource("1_31jbx")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_jvy4d")
 
 [node name="DriverAdapters" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1369116984 instance=ExtResource("1_31jbx")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_e3mf1")
 
 [node name="DrivenAdapters" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=305981638 instance=ExtResource("1_31jbx")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_ynkhd")

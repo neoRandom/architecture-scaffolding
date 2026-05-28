@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c3hqfyupisitr"]
 
+[ext_resource type="Script" uid="uid://b7bavy28dp7mg" path="res://main.gd" id="1_7mycd"]
 [ext_resource type="PackedScene" uid="uid://d0nien4s7hipy" path="res://scaffold.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://7ppg8f7wbpd" path="res://components/step_1.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://3tkhvpg6t7ok" path="res://managers/global_input_manager.tscn" id="3_1bvp3"]
@@ -13,15 +14,18 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_7mycd")
 
 [node name="Scaffold" parent="." unique_id=949884121 instance=ExtResource("2_0xm2m")]
 layout_mode = 1
 
 [node name="Step1" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer" parent_id_path=PackedInt32Array(949884121, 487964463) index="0" unique_id=1606613665 instance=ExtResource("2_h2yge")]
-visible = false
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Step2" parent="Scaffold/MarginContainer/PanelContainer/MarginContainer" parent_id_path=PackedInt32Array(949884121, 487964463) index="1" unique_id=1940958282 instance=ExtResource("3_lquwl")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="Managers" type="Node" parent="." unique_id=2052211142]

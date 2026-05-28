@@ -1,4 +1,5 @@
 @tool
+class_name TitleSubtitleListAdd
 extends Control
 
 @export var resource: TitleSubtitleResource:
