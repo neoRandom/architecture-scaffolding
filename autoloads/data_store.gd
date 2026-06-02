@@ -1,5 +1,7 @@
 extends Node
 
+signal deleting_save
+
 const DATA_FILE_PATH := "user://data.save"
 const SAVE_TIMER_COOLDOWN := 5
 
@@ -90,6 +92,14 @@ class Data:
 		)
 		components.remove_at(idx)
 
+	func get_component_by_id(id: int) -> Component:
+		var idx := components.find_custom(
+			func(component: Component):
+				return component.id == id
+		)
+		return components.get(idx)
+
+
 @abstract
 class DataFileKeys:
 	const CURRENT_ID: String = "current_id"
@@ -142,7 +152,7 @@ func save_data() -> void:
 
 	var data_file := FileAccess.open(DATA_FILE_PATH, FileAccess.WRITE)
 	var temp_save_data := {
-		DataFileKeys.CURRENT_ID: 0,
+		DataFileKeys.CURRENT_ID: data.current_id,
 		DataFileKeys.COMPONENTS: [],
 		DataFileKeys.CONNECTIONS: []
 	}
@@ -153,7 +163,22 @@ func save_data() -> void:
 	for connection in data.connections:
 		temp_save_data[DataFileKeys.CONNECTIONS].append(connection.to_dict())
 
+	print(temp_save_data)
 	data_file.store_line(JSON.stringify(temp_save_data))
 
 	is_saving = false
 	print("DATA SAVED")
+
+func delete_save() -> void:
+	deleting_save.emit()
+
+	if not FileAccess.file_exists(DATA_FILE_PATH):
+		print("File does not exist.")
+		return
+
+	var error = DirAccess.remove_absolute(DATA_FILE_PATH)
+	if error == OK:
+		data = Data.new()
+		print("DATA FILE DELETED")
+	else:
+		print("FAILED TO DELETE DATA FILE: ", error)
