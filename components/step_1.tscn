@@ -45,66 +45,124 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_nphiv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1055445014]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=853315068]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1055445014]
+layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=1286815203]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1286815203]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=991672272]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=991672272]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Step 1 - Components Identification"
 
-[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=813899669]
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=813899669]
 layout_mode = 2
 text = "Try to imagine what the code will look like. Check the description of each kind for better understanding"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=21515326]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=21515326]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1238684934]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer" unique_id=1238684934]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=2101666791]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer" unique_id=2101666791]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 16
 
-[node name="UseCases" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1392042095 instance=ExtResource("1_31jbx")]
+[node name="UseCases" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1392042095 instance=ExtResource("1_31jbx")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_yeft1")
 
-[node name="Models" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1348963724 instance=ExtResource("1_31jbx")]
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/UseCases/VBoxContainer/MarginContainer" parent_id_path=PackedInt32Array(1392042095, 875991567) index="0" unique_id=1677026593]
+custom_minimum_size = Vector2(0, 100)
+
+[node name="Title" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/UseCases/VBoxContainer/MarginContainer/VBoxContainer" index="0" unique_id=1971107224]
+text = "Use Cases"
+
+[node name="Subtitle" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/UseCases/VBoxContainer/MarginContainer/VBoxContainer" index="1" unique_id=974360688]
+text = "What and how the software should do. (e.g.: CreateUser)"
+
+[node name="Models" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1348963724 instance=ExtResource("1_31jbx")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_pyott")
 
-[node name="Services" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1163289455 instance=ExtResource("1_31jbx")]
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Models/VBoxContainer/MarginContainer" parent_id_path=PackedInt32Array(1348963724, 875991567) index="0" unique_id=1677026593]
+custom_minimum_size = Vector2(0, 100)
+
+[node name="Title" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Models/VBoxContainer/MarginContainer/VBoxContainer" index="0" unique_id=1971107224]
+text = "Models"
+
+[node name="Subtitle" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Models/VBoxContainer/MarginContainer/VBoxContainer" index="1" unique_id=974360688]
+text = "Rules and the business objects/entities (e.g.: User)"
+
+[node name="Services" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1163289455 instance=ExtResource("1_31jbx")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_jvy4d")
 
-[node name="DriverAdapters" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1369116984 instance=ExtResource("1_31jbx")]
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Services/VBoxContainer/MarginContainer" parent_id_path=PackedInt32Array(1163289455, 875991567) index="0" unique_id=1677026593]
+custom_minimum_size = Vector2(0, 100)
+
+[node name="Title" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Services/VBoxContainer/MarginContainer/VBoxContainer" index="0" unique_id=1971107224]
+text = "Services"
+
+[node name="Subtitle" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Services/VBoxContainer/MarginContainer/VBoxContainer" index="1" unique_id=974360688]
+text = "Niche isolated business logic (e.g.: JwtGenerator; may be none)"
+
+[node name="DriverAdapters" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1369116984 instance=ExtResource("1_31jbx")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_e3mf1")
 
-[node name="DrivenAdapters" parent="VBoxContainer/ScrollContainer/HBoxContainer" unique_id=305981638 instance=ExtResource("1_31jbx")]
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DriverAdapters/VBoxContainer/MarginContainer" parent_id_path=PackedInt32Array(1369116984, 875991567) index="0" unique_id=1677026593]
+custom_minimum_size = Vector2(0, 100)
+
+[node name="Title" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DriverAdapters/VBoxContainer/MarginContainer/VBoxContainer" index="0" unique_id=1971107224]
+text = "Driver Adapters"
+
+[node name="Subtitle" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DriverAdapters/VBoxContainer/MarginContainer/VBoxContainer" index="1" unique_id=974360688]
+text = "With what the user will interact with (e.g.: HttpApi)"
+
+[node name="DrivenAdapters" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=305981638 instance=ExtResource("1_31jbx")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 resource = SubResource("Resource_ynkhd")
+
+[node name="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DrivenAdapters/VBoxContainer/MarginContainer" parent_id_path=PackedInt32Array(305981638, 875991567) index="0" unique_id=1677026593]
+custom_minimum_size = Vector2(0, 100)
+
+[node name="Title" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DrivenAdapters/VBoxContainer/MarginContainer/VBoxContainer" index="0" unique_id=1971107224]
+text = "Driven Adapters"
+
+[node name="Subtitle" parent="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DrivenAdapters/VBoxContainer/MarginContainer/VBoxContainer" index="1" unique_id=974360688]
+text = "How the service will use external services (e.g.: PostgresUserRepository)"
+
+[editable path="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/UseCases"]
+[editable path="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Models"]
+[editable path="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/Services"]
+[editable path="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DriverAdapters"]
+[editable path="MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/DrivenAdapters"]
