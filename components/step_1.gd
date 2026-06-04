@@ -13,29 +13,55 @@ func _ready() -> void:
 	DataStore.deleting_save.connect(
 		func():
 			use_cases.items.remove_all()
+			models.items.remove_all()
+			services.items.remove_all()
+			driver_adapters.items.remove_all()
+			driven_adapters.items.remove_all()
 	)
 
 	for component: DataStore.Component in DataStore.data.components:
+		var tsla: TitleSubtitleListAdd
+
 		match component.type:
 			DataStore.ComponentType.USE_CASE:
-				var uid := use_cases.items.add_new_item(component.title)
-				unique_id_to_data_id_relation[uid] = component.id
+				tsla = use_cases
+			DataStore.ComponentType.MODEL:
+				tsla = models
+			DataStore.ComponentType.SERVICE:
+				tsla = services
+			DataStore.ComponentType.DRIVER_ADAPTER:
+				tsla = driver_adapters
+			DataStore.ComponentType.DRIVEN_ADAPTER:
+				tsla = driven_adapters
 
-	use_cases.items.item_added.connect(
+		if tsla == null:
+			continue
+
+		var uid := tsla.items.add_new_item(component.title)
+		unique_id_to_data_id_relation[uid] = component.id
+
+	_setup_tsla(use_cases, DataStore.ComponentType.USE_CASE)
+	_setup_tsla(models, DataStore.ComponentType.MODEL)
+	_setup_tsla(services, DataStore.ComponentType.SERVICE)
+	_setup_tsla(driver_adapters, DataStore.ComponentType.DRIVER_ADAPTER)
+	_setup_tsla(driven_adapters, DataStore.ComponentType.DRIVEN_ADAPTER)
+
+func _setup_tsla(tsla: TitleSubtitleListAdd, component_type: DataStore.ComponentType) -> void:
+	tsla.items.item_added.connect(
 		func(uid: int):
-			if _add_item_to_data_store(uid, DataStore.ComponentType.USE_CASE) == true:
+			if _add_item_to_data_store(uid, component_type) == true:
 				print("ADDED %d" % uid)
 			else:
 				print("ERROR ADDING %d" % uid)
 	)
-	use_cases.items.item_removed.connect(
+	tsla.items.item_removed.connect(
 		func(uid: int):
 			if _remove_item_from_data_store(uid) == true:
 				print("REMOVED %d" % uid)
 			else:
 				print("ERROR REMOVING %d" % uid)
 	)
-	use_cases.items.item_text_changed.connect(
+	tsla.items.item_text_changed.connect(
 		func(uid: int, new_text: String):
 			if _update_item_title_from_data_store(uid, new_text) == true:
 				print("UPDATED %d" % uid)
