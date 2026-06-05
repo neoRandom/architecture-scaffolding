@@ -27,12 +27,14 @@ class Component:
 	var id: int = 0
 	var type: ComponentType
 	var title: String
+	var position: Vector2
 
 	func to_dict() -> Dictionary:
 		return {
 			"id": id,
 			"type": type,
-			"title": title
+			"title": title,
+			"position": position
 		}
 
 	static func from_dict(dict: Dictionary) -> Component:
@@ -46,6 +48,9 @@ class Component:
 		var d_title: String = dict.get("title")
 		if d_title != null:
 			new_component.title = d_title
+		var d_position: String = dict.get("position")
+		if d_position != null:
+			new_component.position = Utils.string_to_vector2(d_position)
 
 		return new_component
 

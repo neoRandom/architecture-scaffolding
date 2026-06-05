@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dr4aum3quocn7"]
 
 [ext_resource type="Script" uid="uid://be3sy518l6j1d" path="res://components/step_2.gd" id="1_j7h4a"]
-[ext_resource type="PackedScene" uid="uid://brim8mxtpg62j" path="res://components/component_graph_node.tscn" id="1_oji5u"]
 
 [node name="Step2" type="Control" unique_id=1940958282]
 layout_mode = 3
@@ -20,26 +19,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scroll_offset = Vector2(-700, -400)
 grid_pattern = 1
 snapping_distance = 24
 
-[node name="ComponentGraphNode" parent="GraphEdit" unique_id=804450822 instance=ExtResource("1_oji5u")]
-layout_mode = 1
-offset_left = 323.0
-offset_top = 253.0
-offset_right = 547.0
-offset_bottom = 405.0
-mouse_filter = 1
-position_offset = Vector2(323, 253)
-
-[node name="ComponentGraphNode2" parent="GraphEdit" unique_id=575579977 instance=ExtResource("1_oji5u")]
-layout_mode = 1
-offset_left = 633.0
-offset_top = 254.0
-offset_right = 857.0
-offset_bottom = 406.0
-mouse_filter = 1
-position_offset = Vector2(633, 254)
+[node name="OrderByTypeButton" type="Button" parent="." unique_id=266187587]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 10.0
+offset_right = 428.0
+offset_bottom = 45.0
+text = "Order by Type"
 
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="copy_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_copy_nodes_request"]
@@ -50,3 +40,4 @@ position_offset = Vector2(633, 254)
 [connection signal="node_selected" from="GraphEdit" to="." method="_on_graph_edit_node_selected"]
 [connection signal="paste_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_paste_nodes_request"]
 [connection signal="popup_request" from="GraphEdit" to="." method="_on_graph_edit_popup_request"]
+[connection signal="pressed" from="OrderByTypeButton" to="." method="_on_order_by_type_button_pressed"]
