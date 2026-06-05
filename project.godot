@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Command="*uid://807e1eeid10n"
 DataStore="*uid://bxwavsxlqh387"
+Utils="*uid://bpxl70d1705ld"
 
 [display]
 
