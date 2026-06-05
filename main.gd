@@ -18,16 +18,8 @@ func _handle_next_step_required(reverse: bool) -> void:
 func _move_to_current_step() -> void:
 	match DataStore.data.current_step:
 		1:
-			_move_to_step_1()
+			step_1.visible = true
+			step_2.visible = false
 		2:
-			_move_to_step_2()
-
-func _move_to_step_1() -> void:
-	step_1.visible = true
-	step_2.visible = false
-
-func _move_to_step_2() -> void:
-	step_2.setup_canvas()
-
-	step_1.visible = false
-	step_2.visible = true
+			step_1.visible = false
+			step_2.visible = true

@@ -12,6 +12,7 @@ const COMPONENT_GRAPH_NODE := preload("uid://brim8mxtpg62j")
 # ====================================
 
 func _ready() -> void:
+	setup_canvas()
 	DataStore.deleting_save.connect(
 		func() -> void:
 			for node in graph_edit.get_children():
@@ -141,7 +142,9 @@ func _on_graph_edit_paste_nodes_request() -> void:
 	for node in copied_nodes:
 		if node == null:
 			return
-		graph_edit.add_child(node.duplicate()) # Duplicates a second time
+		# Duplicates a second time to not have the same reference as the one
+		# stored in the copied_nodes array
+		graph_edit.add_child(node.duplicate())
 
 
 func _on_graph_edit_delete_nodes_request(nodes: Array[StringName]) -> void:
