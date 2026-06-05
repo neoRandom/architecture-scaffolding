@@ -3,19 +3,24 @@ extends Control
 @onready var step_1: Step1 = %Step1
 @onready var step_2: Step2 = %Step2
 
-var current_step := 1
-
 func _ready() -> void:
-	_move_to_step_1()
+	_move_to_current_step()
 	Command.next_step_required.connect(_handle_next_step_required)
+	DataStore.deleting_save.connect(_move_to_current_step)
 
 func _handle_next_step_required(reverse: bool) -> void:
-	if current_step == 1 and not reverse:
-		_move_to_step_2()
-		current_step += 1
-	if current_step == 2 and reverse:
-		_move_to_step_1()
-		current_step -= 1
+	var new_current_step := DataStore.data.current_step
+	new_current_step = new_current_step - 1 if reverse else new_current_step + 1
+	new_current_step = clampi(new_current_step, 1, 2)
+	DataStore.data.current_step = new_current_step
+	_move_to_current_step()
+
+func _move_to_current_step() -> void:
+	match DataStore.data.current_step:
+		1:
+			_move_to_step_1()
+		2:
+			_move_to_step_2()
 
 func _move_to_step_1() -> void:
 	step_1.visible = true

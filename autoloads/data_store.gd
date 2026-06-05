@@ -80,6 +80,7 @@ class Connection:
 		return new_connection
 
 class Data:
+	var current_step: int = 1
 	var current_id: int = 0
 	var components: Array[Component] = []
 	var connections: Array[Connection] = []
@@ -107,6 +108,7 @@ class Data:
 
 @abstract
 class DataFileKeys:
+	const CURRENT_STEP: String = "current_step"
 	const CURRENT_ID: String = "current_id"
 	const COMPONENTS: String = "components"
 	const CONNECTIONS: String = "connections"
@@ -134,6 +136,7 @@ func bootstrap() -> void:
 	var saved_components: Array = saved_data.get(DataFileKeys.COMPONENTS, [])
 	var saved_connections: Array = saved_data.get(DataFileKeys.CONNECTIONS, [])
 
+	data.current_step = saved_data.get(DataFileKeys.CURRENT_STEP, 1)
 	data.current_id = saved_data.get(DataFileKeys.CURRENT_ID, 0)
 	for saved_component in saved_components:
 		data.components.append(Component.from_dict(saved_component))
@@ -157,6 +160,7 @@ func save_data() -> void:
 
 	var data_file := FileAccess.open(DATA_FILE_PATH, FileAccess.WRITE)
 	var temp_save_data := {
+		DataFileKeys.CURRENT_STEP: data.current_step,
 		DataFileKeys.CURRENT_ID: data.current_id,
 		DataFileKeys.COMPONENTS: [],
 		DataFileKeys.CONNECTIONS: []
