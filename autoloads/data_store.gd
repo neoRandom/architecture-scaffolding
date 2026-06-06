@@ -1,6 +1,6 @@
 extends Node
 
-signal deleting_save
+signal save_deleted
 
 const DATA_FILE_PATH := "user://data.save"
 const SAVE_TIMER_COOLDOWN := 5
@@ -175,15 +175,15 @@ func save_data() -> void:
 	print("DATA SAVED")
 
 func delete_save() -> void:
-	deleting_save.emit()
-
 	if not FileAccess.file_exists(DATA_FILE_PATH):
-		print("File does not exist.")
+		print("Save File does not exist: %s" % DATA_FILE_PATH)
 		return
 
 	var error = DirAccess.remove_absolute(DATA_FILE_PATH)
-	if error == OK:
-		data = Data.new()
-		print("DATA FILE DELETED")
-	else:
+	if error != OK:
 		print("FAILED TO DELETE DATA FILE: ", error)
+		return
+
+	data = Data.new()
+	save_deleted.emit()
+	print("DATA FILE DELETED")

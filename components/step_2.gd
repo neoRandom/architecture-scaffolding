@@ -12,7 +12,7 @@ const COMPONENT_GRAPH_NODE := preload("uid://brim8mxtpg62j")
 # ====================================
 
 func _ready() -> void:
-	DataStore.deleting_save.connect(clear)
+	DataStore.save_deleted.connect(clear)
 
 func clear() -> void:
 	for node in graph_edit.get_children():
@@ -23,10 +23,11 @@ func clear() -> void:
 func setup() -> void:
 	clear()
 
-	var node_gap := graph_edit.snapping_distance # constant that can't be const
+	# Can't be const because snapping_distance isn't a constant
+	var node_gap := graph_edit.snapping_distance
 
 	var n_node_offset := Vector2(0.0, MYSTERIOUS_Y_OFFSET)
-	var max_node_offset := Vector2.ZERO
+	var max_node_offset := Vector2.ZERO # shows how far the xy node offset goes
 
 	# Necessary for the cubic shape that the nodes will form
 	var rows := 1
@@ -71,6 +72,7 @@ func setup() -> void:
 
 # ====================================
 
+# Column order from left to right
 const node_x_offset_order_by_type := [
 	DataStore.ComponentType.DRIVER_ADAPTER,
 	DataStore.ComponentType.USE_CASE,
@@ -80,7 +82,9 @@ const node_x_offset_order_by_type := [
 ]
 
 func _on_order_by_type_button_pressed() -> void:
-	var node_gap := graph_edit.snapping_distance # constant that can't be const
+	# Can't be const because snapping_distance isn't a constant
+	var node_gap := graph_edit.snapping_distance
+
 	var nodes_by_type: Dictionary[DataStore.ComponentType, Array] = {}
 
 	for type in node_x_offset_order_by_type:
@@ -164,7 +168,6 @@ func _on_graph_edit_node_selected(node: Node) -> void:
 		return
 
 	selected_nodes[unique_id] = node
-	print(selected_nodes)
 
 
 func _on_graph_edit_node_deselected(node: Node) -> void:

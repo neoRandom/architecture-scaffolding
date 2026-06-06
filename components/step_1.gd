@@ -7,10 +7,14 @@ extends Control
 @onready var driver_adapters: TitleSubtitleListAdd = %DriverAdapters
 @onready var driven_adapters: TitleSubtitleListAdd = %DrivenAdapters
 
+# Allows converting a node UID into its corresponding DataStore DID.
+#
+# This is required because Step 1 can only reference nodes by UID,
+# while DataStore operations reference the same entities by DID.
 var unique_id_to_data_id_relation: Dictionary[int, int] = {}
 
 func _ready() -> void:
-	DataStore.deleting_save.connect(clear)
+	DataStore.save_deleted.connect(clear)
 
 func clear() -> void:
 	for column: TitleSubtitleListAdd in [
