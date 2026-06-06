@@ -10,64 +10,82 @@ extends Control
 var unique_id_to_data_id_relation: Dictionary[int, int] = {}
 
 func _ready() -> void:
-	DataStore.deleting_save.connect(
-		func():
-			use_cases.items.remove_all()
-			models.items.remove_all()
-			services.items.remove_all()
-			driver_adapters.items.remove_all()
-			driven_adapters.items.remove_all()
-	)
+	DataStore.deleting_save.connect(clear)
+
+func clear() -> void:
+	for column: TitleSubtitleListAdd in [
+		use_cases,
+		models,
+		services,
+		driver_adapters,
+		driven_adapters
+	]:
+		column.items.remove_all()
+		for connection in column.items.item_added.get_connections():
+			column.items.item_added.disconnect(connection.callable)
+		for connection in column.items.item_removed.get_connections():
+			column.items.item_removed.disconnect(connection.callable)
+		for connection in column.items.item_text_changed.get_connections():
+			column.items.item_text_changed.disconnect(connection.callable)
+
+	unique_id_to_data_id_relation.clear()
+
+func setup() -> void:
+	clear()
 
 	for component: DataStore.Component in DataStore.data.components:
-		var tsla: TitleSubtitleListAdd
+		var column: TitleSubtitleListAdd
 
 		match component.type:
 			DataStore.ComponentType.USE_CASE:
-				tsla = use_cases
+				column = use_cases
 			DataStore.ComponentType.MODEL:
-				tsla = models
+				column = models
 			DataStore.ComponentType.SERVICE:
-				tsla = services
+				column = services
 			DataStore.ComponentType.DRIVER_ADAPTER:
-				tsla = driver_adapters
+				column = driver_adapters
 			DataStore.ComponentType.DRIVEN_ADAPTER:
-				tsla = driven_adapters
+				column = driven_adapters
 
-		if tsla == null:
+		if column == null:
 			continue
 
-		var uid := tsla.items.add_new_item(component.title)
+		var uid := column.items.add_new_item(component.title)
 		unique_id_to_data_id_relation[uid] = component.id
 
-	_setup_tsla(use_cases, DataStore.ComponentType.USE_CASE)
-	_setup_tsla(models, DataStore.ComponentType.MODEL)
-	_setup_tsla(services, DataStore.ComponentType.SERVICE)
-	_setup_tsla(driver_adapters, DataStore.ComponentType.DRIVER_ADAPTER)
-	_setup_tsla(driven_adapters, DataStore.ComponentType.DRIVEN_ADAPTER)
+	_setup_column(use_cases, DataStore.ComponentType.USE_CASE)
+	_setup_column(models, DataStore.ComponentType.MODEL)
+	_setup_column(services, DataStore.ComponentType.SERVICE)
+	_setup_column(driver_adapters, DataStore.ComponentType.DRIVER_ADAPTER)
+	_setup_column(driven_adapters, DataStore.ComponentType.DRIVEN_ADAPTER)
 
-func _setup_tsla(tsla: TitleSubtitleListAdd, component_type: DataStore.ComponentType) -> void:
-	tsla.items.item_added.connect(
+# ======================
+
+func _setup_column(column: TitleSubtitleListAdd, component_type: DataStore.ComponentType) -> void:
+	column.items.item_added.connect(
 		func(uid: int):
 			if _add_item_to_data_store(uid, component_type) == true:
 				print("ADDED %d" % uid)
 			else:
 				print("ERROR ADDING %d" % uid)
 	)
-	tsla.items.item_removed.connect(
+	column.items.item_removed.connect(
 		func(uid: int):
 			if _remove_item_from_data_store(uid) == true:
 				print("REMOVED %d" % uid)
 			else:
 				print("ERROR REMOVING %d" % uid)
 	)
-	tsla.items.item_text_changed.connect(
+	column.items.item_text_changed.connect(
 		func(uid: int, new_text: String):
 			if _update_item_title_from_data_store(uid, new_text) == true:
 				print("UPDATED %d" % uid)
 			else:
 				print("ERROR UPDATING %d" % uid)
 	)
+
+# ======================
 
 func _add_item_to_data_store(uid: int, type: DataStore.ComponentType) -> bool:
 	var list_item_component: ListItem = instance_from_id(uid)

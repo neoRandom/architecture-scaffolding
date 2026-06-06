@@ -12,16 +12,17 @@ const COMPONENT_GRAPH_NODE := preload("uid://brim8mxtpg62j")
 # ====================================
 
 func _ready() -> void:
-	setup_canvas()
-	DataStore.deleting_save.connect(
-		func() -> void:
-			for node in graph_edit.get_children():
-				if node is not ComponentGraphNode:
-					continue
-				node.queue_free()
-	)
+	DataStore.deleting_save.connect(clear)
 
-func setup_canvas() -> void:
+func clear() -> void:
+	for node in graph_edit.get_children():
+		if node is not ComponentGraphNode:
+			continue
+		node.queue_free()
+
+func setup() -> void:
+	clear()
+
 	var node_gap := graph_edit.snapping_distance # constant that can't be const
 
 	var n_node_offset := Vector2(0.0, MYSTERIOUS_Y_OFFSET)
@@ -93,7 +94,7 @@ func _on_order_by_type_button_pressed() -> void:
 	for type in node_x_offset_order_by_type:
 		node_offset.y = 0
 
-		var nodes: Array[ComponentGraphNode] = nodes_by_type[type]
+		var nodes: Array = nodes_by_type[type]
 		if nodes.is_empty():
 			continue
 
