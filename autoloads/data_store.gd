@@ -39,18 +39,15 @@ class Component:
 
 	static func from_dict(dict: Dictionary) -> Component:
 		var new_component := Component.new()
-		var d_id: int = dict.get("id")
-		if d_id != null:
-			new_component.id = d_id
-		var d_type: int = dict.get("type")
-		if d_type != null:
-			new_component.type = d_type as ComponentType
-		var d_title: String = dict.get("title")
-		if d_title != null:
-			new_component.title = d_title
-		var d_position: String = dict.get("position")
-		if d_position != null:
-			new_component.position = Utils.string_to_vector2(d_position)
+
+		if dict.has("id"):
+			new_component.id = dict["id"]
+		if dict.has("type"):
+			new_component.type = dict["type"] as ComponentType
+		if dict.has("title"):
+			new_component.title = dict["title"]
+		if dict.has("position"):
+			new_component.position = Utils.string_to_vector2(dict["position"])
 
 		return new_component
 
@@ -68,15 +65,14 @@ class Connection:
 
 	static func from_dict(dict: Dictionary) -> Connection:
 		var new_connection := Connection.new()
-		var d_id: int = dict.get("id")
-		if d_id != null:
-			new_connection.id = d_id
-		var d_from_id: int = dict.get("from_id")
-		if d_from_id != null:
-			new_connection.from_id = d_from_id
-		var d_to_id: int = dict.get("to_id")
-		if d_to_id != null:
-			new_connection.to_id = d_to_id
+
+		if dict.has("id"):
+			new_connection.id = dict["id"]
+		if dict.has("from_id"):
+			new_connection.from_id = dict["from_id"]
+		if dict.has("to_id"):
+			new_connection.to_id = dict["to_id"]
+
 		return new_connection
 
 class Data:
