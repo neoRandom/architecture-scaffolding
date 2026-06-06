@@ -23,20 +23,16 @@ func clear() -> void:
 func setup() -> void:
 	clear()
 
-	# Can't be const because snapping_distance isn't a constant
 	var node_gap := graph_edit.snapping_distance
+	var max_row_size := ceili(sqrt(DataStore.data.components.size()))
 
-	var n_node_offset := Vector2(0.0, MYSTERIOUS_Y_OFFSET)
-	var max_node_offset := Vector2.ZERO # shows how far the xy node offset goes
-
-	# Necessary for the cubic shape that the nodes will form
+	var node_layout_offset := Vector2(0.0, MYSTERIOUS_Y_OFFSET)
 	var rows := 1
-	var component_qt_root := ceili(sqrt(DataStore.data.components.size()))
+	var layout_size := Vector2.ZERO
 
 	#
 	for i in DataStore.data.components.size():
 		var component = DataStore.data.components[i]
-
 		if component.position == null:
 			component.position = Vector2.ZERO
 
@@ -46,29 +42,34 @@ func setup() -> void:
 
 		graph_edit.add_child(new_graph_node)
 		new_graph_node.title = component.title
-		new_graph_node.position_offset = component.position + n_node_offset - node_size_offset
-
-		# We need to calculate the maximum node offset to center the camera later on
-		if n_node_offset.x > max_node_offset.x:
-			max_node_offset.x = n_node_offset.x
-		if n_node_offset.y > max_node_offset.y:
-			max_node_offset.y = n_node_offset.y
-
-		#
-		if (i + 1) / (rows as float) >= component_qt_root:
-			n_node_offset.x = 0.0
-			n_node_offset.y += new_graph_node.size.y + node_gap
-			rows += 1
-		else:
-			n_node_offset.x += new_graph_node.size.x + node_gap
+		new_graph_node.position_offset = component.position + node_layout_offset - node_size_offset
 
 		new_graph_node.set_style(component.type)
 
-	# TODO: Add connections from DataStore too
+		# Track the layout size so the camera can be centered later
+		if node_layout_offset.x > layout_size.x:
+			layout_size.x = node_layout_offset.x
+		if node_layout_offset.y > layout_size.y:
+			layout_size.y = node_layout_offset.y
 
-	var window_offset := Vector2(-graph_edit.size.x / 2, -graph_edit.size.y / 2)
-	window_offset += Vector2(max_node_offset.x / 2, max_node_offset.y / 2)
-	graph_edit.scroll_offset = window_offset
+		# Start a new row to not overflow the current one
+		#
+		# i + 1 : turns 0-based into 1-based indexing to properly compare it with max row size
+		# / rows : makes the comparison be row-independent
+		var current_row_size := (i + 1) / (rows as float)
+		if current_row_size >= max_row_size:
+			node_layout_offset.x = 0.0
+			node_layout_offset.y += new_graph_node.size.y + node_gap
+			rows += 1
+		else:
+			node_layout_offset.x += new_graph_node.size.x + node_gap
+
+	# TODO: Load node connections from DataStore
+	#
+
+	var offset_to_center_camera := Vector2(-graph_edit.size.x / 2, -graph_edit.size.y / 2)
+	offset_to_center_camera += Vector2(layout_size.x / 2, layout_size.y / 2)
+	graph_edit.scroll_offset = offset_to_center_camera
 
 # ====================================
 
@@ -82,9 +83,7 @@ const node_x_offset_order_by_type := [
 ]
 
 func _on_order_by_type_button_pressed() -> void:
-	# Can't be const because snapping_distance isn't a constant
 	var node_gap := graph_edit.snapping_distance
-
 	var nodes_by_type: Dictionary[DataStore.ComponentType, Array] = {}
 
 	for type in node_x_offset_order_by_type:
