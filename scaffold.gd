@@ -1,6 +1,18 @@
 class_name Scaffold
 extends PanelContainer
 
+@onready var saved_label: Label = %SavedLabel
+
+func _ready() -> void:
+	saved_label.visible = false
+
+	DataStore.data_saved.connect(
+		func() -> void:
+			saved_label.visible = true
+			await get_tree().create_timer(1).timeout
+			saved_label.visible = false
+	)
+
 func _on_save_button_pressed() -> void:
 	DataStore.save_data()
 

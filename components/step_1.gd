@@ -14,7 +14,7 @@ extends Control
 var unique_id_to_data_id_relation: Dictionary[int, int] = {}
 
 func _ready() -> void:
-	DataStore.save_deleted.connect(clear)
+	DataStore.data_deleted.connect(clear)
 
 func clear() -> void:
 	for column: TitleSubtitleListAdd in [

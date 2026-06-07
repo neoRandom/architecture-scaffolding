@@ -1,9 +1,10 @@
 extends Node
 
-signal save_deleted
+signal data_deleted
+signal data_saved
 
 const DATA_FILE_PATH := "user://data.save"
-const SAVE_TIMER_COOLDOWN := 5
+const AUTOSAVE_COOLDOWN := 30
 
 # ===
 
@@ -142,6 +143,7 @@ class DataFileKeys:
 
 # ===
 
+var autosave_timer := Timer.new()
 var data: Data
 var is_saving: bool = false
 
@@ -175,13 +177,12 @@ func bootstrap() -> void:
 		data.connections.append(Connection.from_dict(saved_connection))
 
 func set_timer() -> void:
-	var timer := Timer.new()
-	timer.wait_time = SAVE_TIMER_COOLDOWN
-	timer.one_shot = false
-	timer.autostart = true
+	autosave_timer.wait_time = AUTOSAVE_COOLDOWN
+	autosave_timer.one_shot = false
+	autosave_timer.autostart = true
 
-	timer.timeout.connect(save_data)
-	get_tree().current_scene.add_child(timer)
+	autosave_timer.timeout.connect(save_data)
+	get_tree().current_scene.add_child(autosave_timer)
 
 func save_data() -> void:
 	if is_saving == true or data == null:
@@ -209,6 +210,8 @@ func save_data() -> void:
 	data_file.store_line(JSON.stringify(temp_save_data))
 
 	is_saving = false
+	autosave_timer.wait_time = AUTOSAVE_COOLDOWN
+	data_saved.emit()
 	print("DATA SAVED")
 
 func delete_save() -> void:
@@ -222,5 +225,5 @@ func delete_save() -> void:
 		return
 
 	data = Data.new()
-	save_deleted.emit()
+	data_deleted.emit()
 	print("DATA FILE DELETED")

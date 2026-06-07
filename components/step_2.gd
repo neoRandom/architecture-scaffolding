@@ -16,7 +16,7 @@ var component_did_to_stringname: Dictionary[int, StringName] = {}
 var connections_to_did: Dictionary[Array, int] = {}
 
 func _ready() -> void:
-	DataStore.save_deleted.connect(clear)
+	DataStore.data_deleted.connect(clear)
 
 func clear() -> void:
 	graph_edit.clear_connections()
