@@ -10,6 +10,8 @@ Unlike most code generators, it provides a graphical workflow that helps develop
 
 ### Step 1 - Identify Components
 
+![Screenshot of the Step 1](./screenshots/step1.png)
+
 Define the project's core components:
 
 - Use Cases
@@ -23,6 +25,8 @@ Define the project's core components:
 The tool then generates a visual representation of the components on a 2D canvas.
 
 ### Step 2 - Define Structure
+
+![Screenshot of the Step 2](./screenshots/step2.png)
 
 Refine the architecture by adding:
 
