@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dr4aum3quocn7"]
 
-[ext_resource type="Script" uid="uid://be3sy518l6j1d" path="res://components/step_2.gd" id="1_j7h4a"]
+[ext_resource type="Script" uid="uid://be3sy518l6j1d" path="res://scenes/components/step_2.gd" id="1_j7h4a"]
 
 [node name="Step2" type="Control" unique_id=1940958282]
 layout_mode = 3

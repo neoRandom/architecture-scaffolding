@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://c3hqfyupisitr"]
 
-[ext_resource type="Script" uid="uid://b7bavy28dp7mg" path="res://main.gd" id="1_7mycd"]
-[ext_resource type="PackedScene" uid="uid://d0nien4s7hipy" path="res://scaffold.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://7ppg8f7wbpd" path="res://components/step_1.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://3tkhvpg6t7ok" path="res://managers/global_input_manager.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://dr4aum3quocn7" path="res://components/step_2.tscn" id="3_lquwl"]
-[ext_resource type="PackedScene" uid="uid://t5jv6ai08vdt" path="res://managers/window_mode_manager.tscn" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://b7bavy28dp7mg" path="res://scenes/main.gd" id="1_7mycd"]
+[ext_resource type="PackedScene" uid="uid://d0nien4s7hipy" path="res://scenes/scaffold.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://7ppg8f7wbpd" path="res://scenes/components/step_1.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://3tkhvpg6t7ok" path="res://scenes/managers/global_input_manager.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dr4aum3quocn7" path="res://scenes/components/step_2.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://t5jv6ai08vdt" path="res://scenes/managers/window_mode_manager.tscn" id="4_lquwl"]
 
 [node name="Main" type="Control" unique_id=1351861954]
 layout_mode = 3
