@@ -27,30 +27,36 @@ func set_style(style_type: DataStore.ComponentType) -> void:
 	match type:
 		DataStore.ComponentType.USE_CASE:
 			set_titlebar(
+				"Use Case",
 				COMPONENT_GRAPH_NODE_TITLEBAR_STYLE_1,
 				COMPONENT_GRAPH_NODE_TITLEBAR_SELECTED_STYLE_1
 			)
 		DataStore.ComponentType.MODEL:
 			set_titlebar(
+				"Model",
 				COMPONENT_GRAPH_NODE_TITLEBAR_STYLE_2,
 				COMPONENT_GRAPH_NODE_TITLEBAR_SELECTED_STYLE_2
 			)
 		DataStore.ComponentType.SERVICE:
 			set_titlebar(
+				"Service",
 				COMPONENT_GRAPH_NODE_TITLEBAR_STYLE_3,
 				COMPONENT_GRAPH_NODE_TITLEBAR_SELECTED_STYLE_3
 			)
 		DataStore.ComponentType.DRIVER_ADAPTER:
 			set_titlebar(
+				"Driver Adapter",
 				COMPONENT_GRAPH_NODE_TITLEBAR_STYLE_4,
 				COMPONENT_GRAPH_NODE_TITLEBAR_SELECTED_STYLE_4
 			)
 		DataStore.ComponentType.DRIVEN_ADAPTER:
 			set_titlebar(
+				"Driven Adapter",
 				COMPONENT_GRAPH_NODE_TITLEBAR_STYLE_5,
 				COMPONENT_GRAPH_NODE_TITLEBAR_SELECTED_STYLE_5
 			)
 
-func set_titlebar(normal_style: StyleBoxFlat, selected_style: StyleBoxFlat) -> void:
+func set_titlebar(type_title: String, normal_style: StyleBoxFlat, selected_style: StyleBoxFlat) -> void:
+	title = type_title
 	add_theme_stylebox_override("titlebar", normal_style)
 	add_theme_stylebox_override("titlebar_selected", selected_style)

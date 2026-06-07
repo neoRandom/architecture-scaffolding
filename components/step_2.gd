@@ -41,7 +41,7 @@ func setup() -> void:
 		var node_size_offset := Vector2(new_graph_node.size.x / 2, new_graph_node.size.y / 2)
 
 		graph_edit.add_child(new_graph_node)
-		new_graph_node.title = component.title
+		new_graph_node.component_name.text = component.title
 		new_graph_node.position_offset = component.position + node_layout_offset - node_size_offset
 
 		new_graph_node.set_style(component.type)
