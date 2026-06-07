@@ -58,13 +58,17 @@ class Component:
 class Connection:
 	var id: int = 0
 	var from_id: int
+	var from_port: int
 	var to_id: int
+	var to_port: int
 
 	func to_dict() -> Dictionary:
 		return {
 			"id": id,
 			"from_id": from_id,
-			"to_id": to_id
+			"from_port": from_port,
+			"to_id": to_id,
+			"to_port": to_port
 		}
 
 	static func from_dict(dict: Dictionary) -> Connection:
@@ -74,17 +78,24 @@ class Connection:
 			new_connection.id = dict["id"]
 		if dict.has("from_id"):
 			new_connection.from_id = dict["from_id"]
+		if dict.has("from_port"):
+			new_connection.from_port = dict["from_port"]
 		if dict.has("to_id"):
 			new_connection.to_id = dict["to_id"]
+		if dict.has("to_port"):
+			new_connection.to_port = dict["to_port"]
 
 		return new_connection
 
 class Data:
 	var current_step: int = 1
 	var current_id: int = 0
+	var camera_zoom: float = 1.0
+	var camera_offset: Vector2
 	var components: Array[Component] = []
 	var connections: Array[Connection] = []
 
+	# ===
 	func add_component(component: Component) -> int:
 		current_id += 1
 		component.id = current_id
@@ -105,11 +116,27 @@ class Data:
 		)
 		return components.get(idx)
 
+	# ===
+	func add_connection(connection: Connection) -> int:
+		current_id += 1
+		connection.id = current_id
+		connections.append(connection)
+		return connection.id
+
+	func remove_connection(id: int) -> void:
+		var idx := connections.find_custom(
+			func(connection: Connection):
+				return connection.id == id
+		)
+		connections.remove_at(idx)
+
 
 @abstract
 class DataFileKeys:
 	const CURRENT_STEP: String = "current_step"
 	const CURRENT_ID: String = "current_id"
+	const CAMERA_ZOOM: String = "camera_zoom"
+	const CAMERA_OFFSET: String = "camera_offset"
 	const COMPONENTS: String = "components"
 	const CONNECTIONS: String = "connections"
 
@@ -138,6 +165,10 @@ func bootstrap() -> void:
 
 	data.current_step = saved_data.get(DataFileKeys.CURRENT_STEP, 1)
 	data.current_id = saved_data.get(DataFileKeys.CURRENT_ID, 0)
+	data.camera_zoom = saved_data.get(DataFileKeys.CAMERA_ZOOM, 1.0)
+	if saved_data.has(DataFileKeys.CAMERA_OFFSET):
+		data.camera_offset = Utils.string_to_vector2(saved_data.get(DataFileKeys.CAMERA_OFFSET))
+
 	for saved_component in saved_components:
 		data.components.append(Component.from_dict(saved_component))
 	for saved_connection in saved_connections:
@@ -162,6 +193,8 @@ func save_data() -> void:
 	var temp_save_data := {
 		DataFileKeys.CURRENT_STEP: data.current_step,
 		DataFileKeys.CURRENT_ID: data.current_id,
+		DataFileKeys.CAMERA_ZOOM: data.camera_zoom,
+		DataFileKeys.CAMERA_OFFSET: data.camera_offset,
 		DataFileKeys.COMPONENTS: [],
 		DataFileKeys.CONNECTIONS: []
 	}

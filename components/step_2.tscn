@@ -21,6 +21,8 @@ grow_horizontal = 2
 grow_vertical = 2
 grid_pattern = 1
 snapping_distance = 24
+right_disconnects = true
+minimap_enabled = false
 
 [node name="OrderByTypeButton" type="Button" parent="." unique_id=266187587]
 layout_mode = 0
@@ -30,6 +32,7 @@ offset_right = 428.0
 offset_bottom = 45.0
 text = "Order by Type"
 
+[connection signal="connection_from_empty" from="GraphEdit" to="." method="_on_graph_edit_connection_from_empty"]
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="copy_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_copy_nodes_request"]
 [connection signal="delete_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
@@ -39,4 +42,5 @@ text = "Order by Type"
 [connection signal="node_selected" from="GraphEdit" to="." method="_on_graph_edit_node_selected"]
 [connection signal="paste_nodes_request" from="GraphEdit" to="." method="_on_graph_edit_paste_nodes_request"]
 [connection signal="popup_request" from="GraphEdit" to="." method="_on_graph_edit_popup_request"]
+[connection signal="scroll_offset_changed" from="GraphEdit" to="." method="_on_graph_edit_scroll_offset_changed"]
 [connection signal="pressed" from="OrderByTypeButton" to="." method="_on_order_by_type_button_pressed"]

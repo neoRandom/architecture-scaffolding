@@ -11,10 +11,15 @@ const COMPONENT_GRAPH_NODE := preload("uid://brim8mxtpg62j")
 
 # ====================================
 
+var component_stringname_to_did: Dictionary[StringName, int] = {}
+var component_did_to_stringname: Dictionary[int, StringName] = {}
+var connections_to_did: Dictionary[Array, int] = {}
+
 func _ready() -> void:
 	DataStore.save_deleted.connect(clear)
 
 func clear() -> void:
+	graph_edit.clear_connections()
 	for node in graph_edit.get_children():
 		if node is not ComponentGraphNode:
 			continue
@@ -37,6 +42,8 @@ func setup() -> void:
 		#
 		var new_graph_node: ComponentGraphNode = COMPONENT_GRAPH_NODE.instantiate()
 		graph_edit.add_child(new_graph_node)
+		component_stringname_to_did[new_graph_node.name] = component.id
+		component_did_to_stringname[component.id] = new_graph_node.name
 
 		#
 		new_graph_node.component_name.text = component.title
@@ -86,8 +93,30 @@ func setup() -> void:
 		else:
 			node_layout_offset.x += new_graph_node.size.x + node_gap
 
-	# TODO: Load node connections from DataStore
 	#
+	for connection: DataStore.Connection in DataStore.data.connections:
+		var from_node := component_did_to_stringname[connection.from_id]
+		var to_node := component_did_to_stringname[connection.to_id]
+
+		graph_edit.connect_node(
+			from_node,
+			connection.from_port,
+			to_node,
+			connection.to_port
+		)
+
+		connections_to_did[
+			_generate_connection_key(from_node, connection.from_port, to_node, connection.to_port)
+		] = connection.id
+
+	#
+	await get_tree().process_frame
+
+	graph_edit.zoom = DataStore.data.camera_zoom
+
+	if DataStore.data.camera_offset != null:
+		graph_edit.scroll_offset = DataStore.data.camera_offset
+		return
 
 	var offset_to_center_camera := Vector2(-graph_edit.size.x / 2, -graph_edit.size.y / 2)
 	offset_to_center_camera += Vector2(layout_size.x / 2, layout_size.y / 2)
@@ -105,7 +134,7 @@ const node_x_offset_order_by_type := [
 ]
 
 func _on_order_by_type_button_pressed() -> void:
-	var node_gap := graph_edit.snapping_distance
+	var node_gap := Vector2(graph_edit.snapping_distance * 4, graph_edit.snapping_distance)
 	var nodes_by_type: Dictionary[DataStore.ComponentType, Array] = {}
 
 	for type in node_x_offset_order_by_type:
@@ -126,22 +155,67 @@ func _on_order_by_type_button_pressed() -> void:
 		var current_column_width := 0.0
 		for node in nodes:
 			node.position_offset = node_offset
-			node_offset.y += node.size.y + node_gap
+			node_offset.y += node.size.y + node_gap.y
 			if node.size.x > current_column_width:
 				current_column_width = node.size.x
 
-		node_offset.x += current_column_width + node_gap
+		node_offset.x += current_column_width + node_gap.x
+
+# ====================================
+
+func _on_graph_edit_scroll_offset_changed(offset: Vector2) -> void:
+	if offset == Vector2.ZERO:
+		return
+	DataStore.data.camera_offset = offset
+	DataStore.data.camera_zoom = graph_edit.zoom
 
 # ====================================
 # ====        CONNECTIONS         ====
 # ====================================
 
-func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	graph_edit.connect_node(from_node, from_port, to_node, to_port)
+func _generate_connection_key(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> Array:
+	return [
+		from_node,
+		from_port,
+		to_node,
+		to_port
+	]
 
+func _connect_node(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	var error := graph_edit.connect_node(from_node, from_port, to_node, to_port)
+	if error != 0:
+		print("Error creating connection: ", error)
+		return
+
+	var connection := DataStore.Connection.new()
+	connection.from_id = component_stringname_to_did[from_node]
+	connection.from_port = from_port
+	connection.to_id = component_stringname_to_did[to_node]
+	connection.to_port = to_port
+
+	connections_to_did[
+		_generate_connection_key(from_node, from_port, to_node, to_port)
+	] = DataStore.data.add_connection(connection)
+
+func _disconnect_node(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	graph_edit.disconnect_node(from_node, from_port, to_node, to_port)
+
+	var connection_key := _generate_connection_key(from_node, from_port, to_node, to_port)
+	var connection_did := connections_to_did[connection_key]
+	DataStore.data.remove_connection(connection_did)
+
+
+func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
+	_connect_node(from_node, from_port, to_node, to_port)
 
 func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
-	graph_edit.disconnect_node(from_node, from_port, to_node, to_port)
+	_disconnect_node(from_node, from_port, to_node, to_port)
+
+func _on_graph_edit_connection_from_empty(to_node: StringName, to_port: int, _release_position: Vector2) -> void:
+	for connection in graph_edit.get_connection_list_from_node(to_node):
+		if connection["to_port"] != to_port:
+			continue
+		_disconnect_node(connection["from_node"], connection["from_port"], to_node, to_port)
 
 # ====================================
 # ==== COPY CUT DUPE PASTE DELETE ====
