@@ -11,6 +11,20 @@ bg_color = Color(0.14117648, 0.14117648, 0.14117648, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_310pg"]
 bg_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctmg7"]
+bg_color = Color(0.78431374, 0.0627451, 0.0627451, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_llaou"]
+bg_color = Color(0.627451, 0.0627451, 0.0627451, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [node name="Scaffold" type="PanelContainer" unique_id=949884121]
 anchors_preset = 15
 anchor_right = 1.0
@@ -127,6 +141,8 @@ alignment = 2
 [node name="ConfirmDeleteButton" type="Button" parent="DeleteConfirmationPopUpContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=981851904]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ctmg7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_llaou")
 text = "   Confirm   "
 
 [node name="CancelDeleteButton" type="Button" parent="DeleteConfirmationPopUpContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=636147431]
