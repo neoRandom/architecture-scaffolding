@@ -33,24 +33,46 @@ func setup() -> void:
 	#
 	for i in DataStore.data.components.size():
 		var component = DataStore.data.components[i]
-		if component.position == null:
-			component.position = Vector2.ZERO
 
 		#
 		var new_graph_node: ComponentGraphNode = COMPONENT_GRAPH_NODE.instantiate()
-		var node_size_offset := Vector2(new_graph_node.size.x / 2, new_graph_node.size.y / 2)
-
 		graph_edit.add_child(new_graph_node)
+
+		#
 		new_graph_node.component_name.text = component.title
-		new_graph_node.position_offset = component.position + node_layout_offset - node_size_offset
+
+		if component.position == null:
+			var node_size_offset := Vector2(
+				new_graph_node.size.x / 2,
+				new_graph_node.size.y / 2
+			)
+			new_graph_node.position_offset = node_layout_offset - node_size_offset
+			component.position = new_graph_node.position_offset
+		else:
+			new_graph_node.position_offset = component.position
+
+		if component.size == null:
+			component.size = new_graph_node.size
+		else:
+			new_graph_node.size = component.size
 
 		new_graph_node.set_style(component.type)
 
+		#
+		new_graph_node.position_offset_changed.connect(
+			func() -> void:
+				component.position = new_graph_node.position_offset
+		)
+		new_graph_node.resize_end.connect(
+			func(new_size: Vector2) -> void:
+				component.size = new_size
+		)
+
 		# Track the layout size so the camera can be centered later
-		if node_layout_offset.x > layout_size.x:
-			layout_size.x = node_layout_offset.x
-		if node_layout_offset.y > layout_size.y:
-			layout_size.y = node_layout_offset.y
+		if new_graph_node.position_offset.x > layout_size.x:
+			layout_size.x = new_graph_node.position_offset.x
+		if new_graph_node.position_offset.y > layout_size.y:
+			layout_size.y = new_graph_node.position_offset.y
 
 		# Start a new row to not overflow the current one
 		#

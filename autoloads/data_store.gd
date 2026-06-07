@@ -28,13 +28,15 @@ class Component:
 	var type: ComponentType
 	var title: String
 	var position: Vector2
+	var size: Vector2
 
 	func to_dict() -> Dictionary:
 		return {
 			"id": id,
 			"type": type,
 			"title": title,
-			"position": position
+			"position": position,
+			"size": size
 		}
 
 	static func from_dict(dict: Dictionary) -> Component:
@@ -48,6 +50,8 @@ class Component:
 			new_component.title = dict["title"]
 		if dict.has("position"):
 			new_component.position = Utils.string_to_vector2(dict["position"])
+		if dict.has("size"):
+			new_component.size = Utils.string_to_vector2(dict["size"])
 
 		return new_component
 
@@ -168,7 +172,7 @@ func save_data() -> void:
 	for connection in data.connections:
 		temp_save_data[DataFileKeys.CONNECTIONS].append(connection.to_dict())
 
-	print(temp_save_data)
+	print(JSON.stringify(temp_save_data, "\t"))
 	data_file.store_line(JSON.stringify(temp_save_data))
 
 	is_saving = false
