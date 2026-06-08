@@ -12,7 +12,6 @@ const COMPONENT_GRAPH_NODE := preload("uid://brim8mxtpg62j")
 # ====================================
 
 var component_stringname_to_did: Dictionary[StringName, int] = {}
-var component_did_to_stringname: Dictionary[int, StringName] = {}
 var connections_to_did: Dictionary[Array, int] = {}
 
 func _ready() -> void:
@@ -31,6 +30,7 @@ func setup() -> void:
 	var node_gap := graph_edit.snapping_distance
 	var max_row_size := ceili(sqrt(DataStore.data.components.size()))
 
+	var component_did_to_stringname: Dictionary[int, StringName] = {}
 	var node_layout_offset := Vector2(0.0, MYSTERIOUS_Y_OFFSET)
 	var rows := 1
 	var layout_size := Vector2.ZERO
@@ -73,6 +73,11 @@ func setup() -> void:
 		new_graph_node.resize_end.connect(
 			func(new_size: Vector2) -> void:
 				component.size = new_size
+		)
+		new_graph_node.component_name.text_changed.connect(
+			func(new_text: String) -> void:
+				if component != null:
+					component.title = new_text
 		)
 
 		# Track the layout size so the camera can be centered later
