@@ -1,6 +1,8 @@
 # Architecture Scaffolding
 
-A tool for scaffolding projects using Hexagonal Architecture (or similar architectural styles), built with Godot.
+A tool for scaffolding project architecture using Hexagonal Architecture (or similar architectural styles), built with Godot.
+
+It is also a custom code boilerplate and documentation generator for a fast, frictionless starting point.
 
 Unlike most code generators, it provides a graphical workflow that helps developers refine and visualize their architecture before generating code. The application includes a 2D canvas for spatially organizing components and relationships.
 
