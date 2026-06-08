@@ -59,6 +59,11 @@ theme_override_constants/margin_right = 4
 layout_mode = 2
 theme_override_constants/separation = 16
 
+[node name="ImportButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=1263371669]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "  Import Data  "
+
 [node name="SaveButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=158302800]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -76,6 +81,7 @@ size_flags_horizontal = 3
 
 [node name="SavedLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=2109084000]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Data Saved!"
@@ -149,6 +155,7 @@ text = "   Confirm   "
 layout_mode = 2
 text = "   Cancel   "
 
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer/ImportButton" to="." method="_on_import_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer/DeleteSaveButton" to="." method="_on_delete_save_button_pressed"]
 [connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer/PreviousButton" to="." method="_on_previous_button_pressed"]

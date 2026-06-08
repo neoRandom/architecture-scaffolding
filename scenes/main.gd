@@ -7,6 +7,7 @@ func _ready() -> void:
 	_move_to_current_step()
 	Command.next_step_required.connect(_handle_next_step_required)
 	DataStore.data_deleted.connect(_move_to_current_step)
+	DataStore.data_loaded.connect(_move_to_current_step)
 
 func _handle_next_step_required(reverse: bool) -> void:
 	var new_current_step := DataStore.data.current_step

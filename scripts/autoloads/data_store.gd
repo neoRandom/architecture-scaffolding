@@ -2,6 +2,7 @@ extends Node
 
 signal data_deleted
 signal data_saved
+signal data_loaded
 
 const DATA_FILE_PATH := "user://data.save"
 const AUTOSAVE_COOLDOWN := 30
@@ -104,6 +105,13 @@ class Data:
 		return component.id
 
 	func remove_component(id: int) -> void:
+		var component_connections := connections.filter(
+			func(connection) -> bool:
+				return connection.from_id == id or connection.to_id == id
+		)
+		for connection in component_connections:
+			remove_connection(connection.id)
+
 		var idx := components.find_custom(
 			func(component: Component):
 				return component.id == id
@@ -145,13 +153,14 @@ class DataFileKeys:
 
 var autosave_timer := Timer.new()
 var data: Data
-var is_saving: bool = false
+var can_save: bool = false
 
 func _ready() -> void:
 	bootstrap()
 	set_timer()
 
 func bootstrap() -> void:
+	can_save = false
 	data = Data.new()
 
 	if not FileAccess.file_exists(DATA_FILE_PATH):
@@ -176,6 +185,8 @@ func bootstrap() -> void:
 	for saved_connection in saved_connections:
 		data.connections.append(Connection.from_dict(saved_connection))
 
+	can_save = true
+
 func set_timer() -> void:
 	autosave_timer.wait_time = AUTOSAVE_COOLDOWN
 	autosave_timer.one_shot = false
@@ -185,9 +196,9 @@ func set_timer() -> void:
 	get_tree().current_scene.add_child(autosave_timer)
 
 func save_data() -> void:
-	if is_saving == true or data == null:
+	if can_save == false or data == null:
 		return
-	is_saving = true
+	can_save = false
 	print("SAVING DATA...")
 
 	var data_file := FileAccess.open(DATA_FILE_PATH, FileAccess.WRITE)
@@ -209,7 +220,7 @@ func save_data() -> void:
 	print(JSON.stringify(temp_save_data, "\t"))
 	data_file.store_line(JSON.stringify(temp_save_data))
 
-	is_saving = false
+	can_save = true
 	autosave_timer.wait_time = AUTOSAVE_COOLDOWN
 	data_saved.emit()
 	print("DATA SAVED")
@@ -227,3 +238,26 @@ func delete_save() -> void:
 	data = Data.new()
 	data_deleted.emit()
 	print("DATA FILE DELETED")
+
+func load_save(source_path: String) -> void:
+	can_save = false
+
+	if not FileAccess.file_exists(source_path):
+		print("Error: Source file does not exist at " + source_path)
+		return
+
+	# Open directory access
+	var dir = DirAccess.open("res://") # Base directory context
+	if dir:
+		var error = dir.copy(source_path, DATA_FILE_PATH)
+
+		if error == OK:
+			print("Save File loaded successfully")
+			bootstrap()
+			data_loaded.emit()
+		else:
+			print("Failed to load file. Error code: ", error)
+	else:
+		print("Failed to access the directory system.")
+
+	can_save = true
