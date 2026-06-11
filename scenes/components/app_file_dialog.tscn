@@ -8,3 +8,4 @@ size = Vector2i(801, 360)
 visible = true
 file_mode = 0
 access = 2
+filters = PackedStringArray("*.save")

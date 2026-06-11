@@ -3,6 +3,7 @@ extends Node
 signal data_deleted
 signal data_saved
 signal data_loaded
+signal data_exported
 
 const DATA_FILE_PATH := "user://data.save"
 const AUTOSAVE_COOLDOWN := 30
@@ -198,6 +199,7 @@ func set_timer() -> void:
 func save_data() -> void:
 	if can_save == false or data == null:
 		return
+
 	can_save = false
 	print("SAVING DATA...")
 
@@ -261,3 +263,18 @@ func load_save(source_path: String) -> void:
 		print("Failed to access the directory system.")
 
 	can_save = true
+
+func export_save(save_path: String) -> void:
+	save_data()
+
+	var dir = DirAccess.open("res://") # Base directory context
+	if dir:
+		var error = dir.copy(DATA_FILE_PATH, save_path)
+
+		if error == OK:
+			print("Save File exported successfully")
+			data_exported.emit()
+		else:
+			print("Failed to load file. Error code: ", error)
+	else:
+		print("Failed to access the directory system.")
