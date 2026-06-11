@@ -8,6 +8,31 @@ bg_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bd7uj"]
 bg_color = Color(0.14117648, 0.14117648, 0.14117648, 1)
 
+[sub_resource type="InputEventKey" id="InputEventKey_ctmg7"]
+device = -1
+ctrl_pressed = true
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_llaou"]
+events = [SubResource("InputEventKey_ctmg7")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_llaou"]
+device = -1
+ctrl_pressed = true
+keycode = 4194319
+
+[sub_resource type="Shortcut" id="Shortcut_4dsie"]
+events = [SubResource("InputEventKey_llaou")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_7qv74"]
+device = -1
+ctrl_pressed = true
+keycode = 4194321
+
+[sub_resource type="Shortcut" id="Shortcut_07n6f"]
+events = [SubResource("InputEventKey_7qv74")]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_310pg"]
 bg_color = Color(0.1254902, 0.1254902, 0.1254902, 1)
 
@@ -73,6 +98,7 @@ text = "  Export Data  "
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 12
+shortcut = SubResource("Shortcut_llaou")
 text = "  Save  "
 
 [node name="DeleteSaveButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=640431494]
@@ -105,11 +131,13 @@ size_flags_horizontal = 3
 [node name="PreviousButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=1340787441]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
+shortcut = SubResource("Shortcut_4dsie")
 text = "    Previous    "
 
 [node name="NextButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer" unique_id=68750172]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
+shortcut = SubResource("Shortcut_07n6f")
 text = "    Next    "
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=487964463]
